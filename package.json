@@ -1,0 +1,46 @@
+{
+  "name": "@mcrowe/typerouter",
+  "version": "0.0.1",
+  "description": "Typesafe router for TypeScript",
+  "author": "Mitch Crowe <code@mitchcrowe.com> (http://www.mitchcrowe.com)",
+  "license": "ISC",
+  "repository": "https://github.com/mcrowe/reapp",
+  "scripts": {
+    "build": "tsc",
+    "format": "prettier --list-different --write \"src/**/*\"",
+    "test": "ava",
+    "watch": "tsc -w"
+  },
+  "main": "lib/index.js",
+  "typings": "lib/index",
+  "files": [
+    "lib/"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^10.5.2",
+    "@types/react": "^16.4.6",
+    "@types/react-dom": "^16.0.6",
+    "ava": "^0.25.0",
+    "prettier": "1.14.0",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "typescript": "^2.9.2"
+  },
+  "peerDependencies": {
+    "react": "16.x",
+    "react-dom": "16.x"
+  },
+  "ava": {
+    "files": [
+      "lib/**/*.test.js"
+    ],
+    "verbose": true
+  },
+  "prettier": {
+    "singleQuote": true,
+    "tabWidth": 2,
+    "semi": false,
+    "printWidth": 80
+  }
+}
