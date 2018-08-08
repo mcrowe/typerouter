@@ -4,6 +4,7 @@ interface IProps<T extends IRouteMap> {
     initialRoute: IRoute;
     routes: T;
     getSceneProps: (nav: any) => object;
+    onNavigate?: (route: IRoute) => void;
 }
 interface IState {
     currentRoute: IRoute;
