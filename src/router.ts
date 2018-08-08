@@ -5,6 +5,7 @@ interface IProps<T extends IRouteMap> {
   initialRoute: IRoute
   routes: T
   getSceneProps: (nav: any) => object
+  onNavigate?: (route: IRoute) => void
 }
 
 interface IState {
@@ -25,7 +26,9 @@ export default class Router<T extends IRouteMap> extends React.Component<
 
   go = (path: string, params: object = {}) => {
     const route = this.makeRoute(path, params)
-    this.setState({ currentRoute: route })
+    this.setState({ currentRoute: route }, () => {
+      this.props.onNavigate && this.props.onNavigate(route)
+    })
   }
 
   makeRoute(path: string, params: object): IRoute {
