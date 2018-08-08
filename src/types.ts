@@ -1,4 +1,5 @@
 export interface INavigator {
+  getCurrentRoute(): IRoute
   go(path: string, params?: object): void
 }
 

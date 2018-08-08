@@ -36,7 +36,12 @@ export default class Router<T extends IRouteMap> extends React.Component<
   }
 
   getNavigator(): INavigator {
+    const currentRoute = this.state.currentRoute
+
     return {
+      getCurrentRoute() {
+        return currentRoute
+      },
       go: this.go
     }
   }
