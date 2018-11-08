@@ -1,19 +1,24 @@
 import * as React from 'react';
-import { INavigator, IRoute, IRouteMap } from './types';
+import { IRoute, IRouteMap } from './types';
 interface IProps<T extends IRouteMap> {
     initialRoute: IRoute;
     routes: T;
-    getSceneProps: (nav: any) => object;
+    getSceneProps: (router: Router<T>) => object;
     onNavigate?: (route: IRoute) => void;
 }
 interface IState {
-    currentRoute: IRoute;
+    stack: IRoute[];
 }
 export default class Router<T extends IRouteMap> extends React.Component<IProps<T>, IState> {
     constructor(props: IProps<T>);
-    go: (path: string, params?: object) => void;
+    replace: (path: string, params?: object) => void;
+    replaceParams: (params: object) => void;
+    push: (path: string, params?: object) => void;
+    pop: () => void;
+    setStack: (stack: IRoute[]) => void;
+    _handleNavigate: () => void;
     makeRoute(path: string, params: object): IRoute;
-    getNavigator(): INavigator;
+    getCurrentRoute(): IRoute;
     render(): React.ReactElement<{}>;
 }
 export {};
