@@ -20,6 +20,10 @@ export default class Router extends React.Component<IProps, IState> {
     this.state = {
       stack: [props.initialRoute]
     }
+
+    window.onpopstate = () => {
+      this.pop()
+    }
   }
 
   replace = (path: string, params: object = {}) => {
@@ -41,6 +45,8 @@ export default class Router extends React.Component<IProps, IState> {
     const { stack } = this.state
     stack.push(route)
     this.setStack(stack)
+
+    window.history.pushState({}, undefined)
   }
 
   pop = () => {
