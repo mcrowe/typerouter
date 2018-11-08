@@ -1,16 +1,16 @@
 import * as React from 'react';
 import { IRoute, IRouteMap } from './types';
-interface IProps<T extends IRouteMap> {
+interface IProps {
     initialRoute: IRoute;
-    routes: T;
-    getSceneProps: (router: Router<T>) => object;
+    routes: IRouteMap;
+    getSceneProps: (router: Router) => object;
     onNavigate?: (route: IRoute) => void;
 }
 interface IState {
     stack: IRoute[];
 }
-export default class Router<T extends IRouteMap> extends React.Component<IProps<T>, IState> {
-    constructor(props: IProps<T>);
+export default class Router extends React.Component<IProps, IState> {
+    constructor(props: IProps);
     replace: (path: string, params?: object) => void;
     replaceParams: (params: object) => void;
     push: (path: string, params?: object) => void;

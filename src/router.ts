@@ -1,10 +1,10 @@
 import * as React from 'react'
-import { INavigator, IRoute, IRouteMap } from './types'
+import { IRoute, IRouteMap } from './types'
 
-interface IProps<T extends IRouteMap> {
+interface IProps {
   initialRoute: IRoute
-  routes: T
-  getSceneProps: (router: Router<T>) => object
+  routes: IRouteMap
+  getSceneProps: (router: Router) => object
   onNavigate?: (route: IRoute) => void
 }
 
@@ -12,12 +12,9 @@ interface IState {
   stack: IRoute[]
 }
 
-export default class Router<T extends IRouteMap> extends React.Component<
-  IProps<T>,
-  IState
-> {
+export default class Router extends React.Component<IProps, IState> {
 
-  constructor(props: IProps<T>) {
+  constructor(props: IProps) {
     super(props)
 
     this.state = {
