@@ -3,6 +3,7 @@ import { IRoute, IRouteMap } from './types'
 import * as Util from './util'
 
 interface IProps {
+  homePath: string
   routeMap: IRouteMap
   getSceneProps: (router: Router) => object
   onNavigate?: (route: IRoute) => void
@@ -87,11 +88,13 @@ export default class Router extends React.Component<IProps, IState> {
   }
 
   render() {
-    const { routeMap: routes, getSceneProps } = this.props
+    const { routeMap, getSceneProps, homePath } = this.props
 
     const route = this.getCurrentRoute()
 
-    const component = routes[route.path]
+    const path = route.path == '' ? homePath : route.path
+
+    const component = routeMap[path]
 
     if (!component) {
       throw new Error(`Route not found ${route.path}.`)

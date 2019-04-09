@@ -3,6 +3,7 @@ import Router from '../router'
 
 test('basics', t => {
   const router = new Router({
+    homePath: '/',
     routeMap: {},
     getSceneProps: () => ({})
   })

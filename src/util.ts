@@ -27,7 +27,7 @@ export function parseRouteFromUrl(urlString: string): IRoute | undefined {
     const url = new URL(urlString)
 
     return {
-      path: url.pathname.slice(1),
+      path: url.pathname,
       params: queryStringToParams(url.search)
     }
   } catch {
