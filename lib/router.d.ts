@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { IRoute, IRouteMap } from './types';
 interface IProps {
-    initialRoute: IRoute;
-    routes: IRouteMap;
+    routeMap: IRouteMap;
     getSceneProps: (router: Router) => object;
     onNavigate?: (route: IRoute) => void;
 }

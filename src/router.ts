@@ -3,8 +3,7 @@ import { IRoute, IRouteMap } from './types'
 import * as Util from './util'
 
 interface IProps {
-  initialRoute: IRoute
-  routes: IRouteMap
+  routeMap: IRouteMap
   getSceneProps: (router: Router) => object
   onNavigate?: (route: IRoute) => void
 }
@@ -18,8 +17,10 @@ export default class Router extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props)
 
+    const initialRoute = Util.parseRouteFromUrl(window.location.href)
+
     this.state = {
-      stack: [props.initialRoute]
+      stack: [initialRoute]
     }
 
     window.onpopstate = this._onPopState
@@ -65,6 +66,7 @@ export default class Router extends React.Component<IProps, IState> {
   _onPopState = () => {
     const { stack } = this.state
     stack.pop()
+    this.setStack(stack)
   }
 
   setStack = (stack: IRoute[]) => {
@@ -85,7 +87,7 @@ export default class Router extends React.Component<IProps, IState> {
   }
 
   render() {
-    const { routes, getSceneProps } = this.props
+    const { routeMap: routes, getSceneProps } = this.props
 
     const route = this.getCurrentRoute()
 
