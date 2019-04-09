@@ -1,3 +1,4 @@
+import * as UrlParse from 'url-parse'
 import { IRoute } from './types'
 
 export function paramsToQueryString(obj: object): string {
@@ -11,26 +12,24 @@ export function paramsToQueryString(obj: object): string {
   return str
 }
 
-export function queryStringToParams(queryString: string): object {
-  const params = new URLSearchParams(queryString)
-  const obj: object = {}
+// export function queryStringToParams(queryString: string): object {
+//   console.log('qstp', queryString)
+//   const params = new URLSearchParams(queryString)
+//   const obj: object = {}
 
-  for (const entry of (params as any).entries()) {
-    obj[entry[0]] = entry[1]
-  }
+//   for (const entry of (params as any).entries()) {
+//     console.log('entry', entry)
+//     obj[entry[0]] = entry[1]
+//   }
 
-  return obj
-}
+//   return obj
+// }
 
 export function parseRouteFromUrl(urlString: string): IRoute | undefined {
-  try {
-    const url = new URL(urlString)
+  const url = UrlParse(urlString, true)
 
-    return {
-      path: url.pathname.slice(1),
-      params: queryStringToParams(url.search)
-    }
-  } catch {
-    return
+  return {
+    path: url.pathname.slice(1),
+    params: url.query
   }
 }

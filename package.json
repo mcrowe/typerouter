@@ -16,11 +16,14 @@
   "files": [
     "lib/"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "url-parse": "^1.4.4"
+  },
   "devDependencies": {
     "@types/node": "^10.5.2",
     "@types/react": "^16.4.6",
     "@types/react-dom": "^16.0.6",
+    "@types/url-parse": "^1.4.3",
     "ava": "^0.25.0",
     "prettier": "1.14.0",
     "react": "^16.4.1",
