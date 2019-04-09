@@ -1,22 +1,18 @@
-import * as UrlParse from 'url-parse'
 import { IRoute } from './types'
 
-export function paramsToQueryString(obj: object): string {
-  let str = ''
-  for (let key in obj) {
-    if (str != '') {
-      str += '&'
-    }
-    str += key + '=' + encodeURIComponent(obj[key])
+export function parseStackFromUrl(urlString: string): IRoute[] | undefined {
+  const url = new URL(urlString)
+
+  const path = url.pathname.slice(1)
+
+  if (url.pathname == '') {
+    return
   }
-  return str
-}
 
-export function parseRouteFromUrl(urlString: string): IRoute | undefined {
-  const url = UrlParse(urlString, true)
-
-  return {
-    path: url.pathname.slice(1),
-    params: url.query
+  try {
+    return JSON.parse(decodeURIComponent(path))
+  } catch (e) {
+    console.log('error parsing', e)
+    return
   }
 }

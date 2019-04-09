@@ -3,7 +3,7 @@ import { IRoute, IRouteMap } from './types'
 import * as Util from './util'
 
 interface IProps {
-  homePath: string
+  initialRoute: IRoute
   routeMap: IRouteMap
   getSceneProps: (router: Router) => object
   onNavigate?: (route: IRoute) => void
@@ -18,13 +18,21 @@ export default class Router extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props)
 
-    const initialRoute = Util.parseRouteFromUrl(window.location.href)
+    let initialStack = [props.initialRoute]
 
-    this.state = {
-      stack: [initialRoute]
+    if (isBrowser()) {
+      const stack = Util.parseStackFromUrl(window.location.href)
+
+      if (stack) {
+        initialStack = stack
+      }
+
+      window.onpopstate = this._onPopState
     }
 
-    window.onpopstate = this._onPopState
+    this.state = {
+      stack: initialStack
+    }
   }
 
   replace = (path: string, params: object = {}) => {
@@ -34,8 +42,9 @@ export default class Router extends React.Component<IProps, IState> {
     stack[stack.length - 1] = route
     this.setStack(stack)
 
-    const query = Util.paramsToQueryString(route.params)
-    window.history.replaceState({}, undefined, `/${route.path}?${query}`)
+    if (isBrowser()) {
+      window.history.replaceState({}, undefined, this._serializeStack())
+    }
   }
 
   replaceParams = (params: object) => {
@@ -50,8 +59,9 @@ export default class Router extends React.Component<IProps, IState> {
     stack.push(route)
     this.setStack(stack)
 
-    const query = Util.paramsToQueryString(route.params)
-    window.history.pushState({}, undefined, `/${route.path}?${query}`)
+    if (isBrowser()) {
+      window.history.pushState({}, undefined, this._serializeStack())
+    }
   }
 
   pop = () => {
@@ -68,6 +78,10 @@ export default class Router extends React.Component<IProps, IState> {
     const { stack } = this.state
     stack.pop()
     this.setStack(stack)
+  }
+
+  _serializeStack = () => {
+    return '/' + encodeURIComponent(JSON.stringify(this.state.stack))
   }
 
   setStack = (stack: IRoute[]) => {
@@ -88,13 +102,11 @@ export default class Router extends React.Component<IProps, IState> {
   }
 
   render() {
-    const { routeMap, getSceneProps, homePath } = this.props
+    const { routeMap, getSceneProps } = this.props
 
     const route = this.getCurrentRoute()
 
-    const path = route.path == '' ? homePath : route.path
-
-    const component = routeMap[path]
+    const component = routeMap[route.path]
 
     if (!component) {
       throw new Error(`Route not found ${route.path}.`)
@@ -107,4 +119,8 @@ export default class Router extends React.Component<IProps, IState> {
 
     return React.createElement(component, props)
   }
+}
+
+function isBrowser() {
+  return typeof window != 'undefined'
 }

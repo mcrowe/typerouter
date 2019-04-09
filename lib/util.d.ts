@@ -1,3 +1,2 @@
 import { IRoute } from './types';
-export declare function paramsToQueryString(obj: object): string;
-export declare function parseRouteFromUrl(urlString: string): IRoute | undefined;
+export declare function parseStackFromUrl(urlString: string): IRoute[] | undefined;

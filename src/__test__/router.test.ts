@@ -3,8 +3,10 @@ import Router from '../router'
 
 test('basics', t => {
   const router = new Router({
-    homePath: '/',
-    routeMap: {},
+    initialRoute: {path: 'Home', params: {}},
+    routeMap: {
+      'Home': (() => {}) as any
+    },
     getSceneProps: () => ({})
   })
 
