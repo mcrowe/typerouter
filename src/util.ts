@@ -16,3 +16,7 @@ export function parseStackFromUrl(urlString: string): IRoute[] | undefined {
     return
   }
 }
+
+export function serializeStack(stack: IRoute[]) {
+  return '/' + encodeURIComponent(JSON.stringify(this.state.stack))
+}

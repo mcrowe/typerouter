@@ -27,6 +27,10 @@ export default class Router extends React.Component<IProps, IState> {
         initialStack = stack
       }
 
+      for (const route of stack) {
+        window.history.pushState({}, undefined, Util.serializeStack(stack))
+      }
+
       window.onpopstate = this._onPopState
     }
 
@@ -81,7 +85,7 @@ export default class Router extends React.Component<IProps, IState> {
   }
 
   _serializeStack = () => {
-    return '/' + encodeURIComponent(JSON.stringify(this.state.stack))
+    return Util.serializeStack(this.state.stack)
   }
 
   setStack = (stack: IRoute[]) => {
