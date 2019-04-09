@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { IRoute, IRouteMap } from './types'
+import * as Util from './util'
 
 interface IProps {
   initialRoute: IRoute
@@ -32,6 +33,9 @@ export default class Router extends React.Component<IProps, IState> {
     const route = this.makeRoute(path, params)
     stack[stack.length - 1] = route
     this.setStack(stack)
+
+    const query = Util.paramsToQueryString(route.params)
+    window.history.replaceState({}, undefined, `/${route.path}?${query}`)
   }
 
   replaceParams = (params: object) => {
@@ -46,7 +50,8 @@ export default class Router extends React.Component<IProps, IState> {
     stack.push(route)
     this.setStack(stack)
 
-    window.history.pushState({}, undefined)
+    const query = Util.paramsToQueryString(route.params)
+    window.history.pushState({}, undefined, `/${route.path}?${query}`)
   }
 
   pop = () => {
