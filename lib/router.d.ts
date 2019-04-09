@@ -15,6 +15,7 @@ export default class Router extends React.Component<IProps, IState> {
     replaceParams: (params: object) => void;
     push: (path: string, params?: object) => void;
     pop: () => void;
+    _onPopState: () => void;
     setStack: (stack: IRoute[]) => void;
     _handleNavigate: () => void;
     makeRoute(path: string, params: object): IRoute;

@@ -22,9 +22,7 @@ export default class Router extends React.Component<IProps, IState> {
       stack: [props.initialRoute]
     }
 
-    window.onpopstate = () => {
-      this.pop()
-    }
+    window.onpopstate = this._onPopState
   }
 
   replace = (path: string, params: object = {}) => {
@@ -61,8 +59,12 @@ export default class Router extends React.Component<IProps, IState> {
       throw new Error("Cannot pop initial route")
     }
 
+    window.history.back()
+  }
+
+  _onPopState = () => {
+    const { stack } = this.state
     stack.pop()
-    this.setStack(stack)
   }
 
   setStack = (stack: IRoute[]) => {
