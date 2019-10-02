@@ -1,6 +1,6 @@
 {
   "name": "@mcrowe/typerouter",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Typesafe router for TypeScript",
   "author": "Mitch Crowe <code@mitchcrowe.com> (http://www.mitchcrowe.com)",
   "license": "ISC",
